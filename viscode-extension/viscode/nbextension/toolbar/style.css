@@ -1,0 +1,84 @@
+.chat-close {
+	background: #1b2126;
+	border-radius: 50%;
+	color: #fff;
+	display: block;
+	float: right;
+	font-size: 10px;
+	height: 16px;
+	line-height: 16px;
+	margin: 2px 0 0 0;
+	text-align: center;
+	width: 16px;
+}
+
+.chat {
+	background: #fff;
+}
+
+.clearfix {
+	*zoom: 1;
+}
+
+/* For IE 6/7 */
+.clearfix:before,
+.clearfix:after {
+	content: "";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+#viscode-toolbar {
+	display: flex;
+}
+
+.viscode-toolbar-btn {
+	bottom: 0;
+	font-size: 12px;
+	/* right: 0px; */
+	margin-right: 24px;
+	position: relative;
+	display: inline;
+	/* width: 300px; */
+}
+
+.viscode-toolbar-btn header {
+	background: #293239;
+	/* background: white; */
+	border-radius: 5px 5px 0 0;
+	color: #fff;
+	cursor: pointer;
+	padding: 8px 24px;
+}
+
+#live-chat {
+	bottom: 0;
+	font-size: 12px;
+	/* right: 0px; */
+	margin-right: 24px;
+	position: relative;
+	display: inline;
+	/* width: 300px; */
+}
+
+#live-chat header {
+	background: #293239;
+	/* background: white; */
+	border-radius: 5px 5px 0 0;
+	color: #fff;
+	cursor: pointer;
+	padding: 8px 24px;
+}
+
+.admin-modal .col-sm-3 {
+	margin-bottom: 4px;
+}
+
+@media (min-width: 992px) {
+	.modal .modal-dialog.modal-lg {
+		width: 90%;
+	}
+}

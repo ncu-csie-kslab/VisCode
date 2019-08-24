@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title>Smoothed D3.js Radar Chart</title>
+
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' rel='stylesheet' type='text/css'>
+	</style>
+	<!-- Google fonts -->
+	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'> -->
+	<!-- <link href='./heatmap.css' rel='stylesheet' type='text/css'> -->
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	 crossorigin="anonymous"></script>
+	<!-- D3.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js" charset="utf-8"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js'></script>
+
+
+	<style>
+		/* body {
+			font-family: 'Open Sans', sans-serif;
+			font-size: 16px;
+			font-weight: 300;
+			fill: #242424;
+			text-align: center;
+			text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+			cursor: default;
+		} */
+
+		.legend {
+			font-family: 'Raleway', sans-serif;
+			fill: #333333;
+		}
+
+		.tooltip {
+			fill: #333333;
+		}
+
+		.svg-container {
+			display: inline-block;
+			position: relative;
+			width: 100%;
+			padding-bottom: 83%;
+			/* aspect ratio */
+			vertical-align: top;
+			overflow: hidden;
+		}
+
+		.svg-content-responsive {
+			display: inline-block;
+			position: absolute;
+			top: 10px;
+			left: 0;
+		}
+
+		.main.container {
+			margin-top: 7em;
+		}
+	</style>
+
+</head>
+
+<body>
+	<!-- <div class="ui top fixed menu">
+		<div class="header item">
+			<img src="/images/logo.png">
+			VisCode
+		</div>
+		<a class="item">Features</a>
+		<a class="item">Testimonials</a>
+		<a class="item">Sign-in</a>
+	</div> -->
+	<div class="ui main container">
+		<div class="ui grid">
+			<div class="sixteen wide column">
+				<div class='ui segments'>
+					<div class="ui segment grid internally celled">
+						<!-- <div class="ui grid internally celled"> -->
+						<div class="six wide column middle aligned">
+							<div id="radarChart_IndentationError" class="radarChart"></div>
+						</div>
+						<div class="ten wide column">
+							<div class="middle aligned" style="display: inline; padding: 10px;vertical-align: middle;">
+								<!-- <div class="ui header">Note:</div> -->
+								<h4 class="ui header">IndentationError</h4>
+								<p>如果學生的程式碼會使用的縮排結構較為複雜時，
+									也就是使用條件和迴圈較多，造成程式碼層數較深時，
+									可能造成 IndentationError 這個指標偏高。
+								</p>
+
+								<!-- <div class="ui stretched grid internally celled">
+									<div class="row stretched">123</div>
+									<div class="row stretched">123</div>
+									<div class="row stretched">123</div>
+								</div> -->
+							</div>
+						</div>
+						<!-- </div> -->
+					</div>
+					<div class="ui bottom attached warning message">
+						<i class="warning icon"></i>
+						建議老師加強學生正確使用縮排的觀念！
+					</div>
+				</div>
+			</div>
+
+			<div class="sixteen wide column">
+				<div class='ui segments'>
+					<div class="ui segment grid internally celled">
+						<div class="six wide column middle aligned">
+							<div id="radarChart_SyntaxError" class="radarChart"></div>
+						</div>
+						<div class="ten wide column">
+							<div class="middle aligned" style="display: inline; padding: 10px;vertical-align: middle;">
+								<h4 class="ui header">SyntaxError</h4>
+								<p>當學生會使用較多括號來進行較複雜的運算時，
+									老師可以關注 SyntaxError 的學生，
+									當學生 SyntaxError 發生次數異常多時，
+									可以推測是遇到括號沒有成對的問題，
+									學生可能自己也沒發現到括號沒有成對，
+									從錯誤訊息也很難直接得知是括號沒有成對，
+									在jupyter中也不會提示括號沒有成對。</p>
+							</div>
+						</div>
+					</div>
+					<div class="ui bottom attached warning message">
+						<i class="warning icon"></i>
+						建議老師加強學生正確使用縮排的觀念！
+					</div>
+				</div>
+			</div>
+
+			<div class="sixteen wide column">
+				<div class='ui segments'>
+					<div class="ui segment grid internally celled">
+						<div class="six wide column middle aligned">
+							<div id="radarChart_NameError" class="radarChart"></div>
+						</div>
+						<div class="ten wide column">
+							<div class="middle aligned" style="display: inline; padding: 10px;vertical-align: middle;">
+								<h4 class="ui header">NameError</h4>
+								<p>學生可能使用未 import 的函式庫，造成 NameError 較多。</p>
+							</div>
+						</div>
+					</div>
+					<div class="ui bottom attached warning message">
+						<i class="warning icon"></i>
+						建議老師加強學生正確使用縮排的觀念！
+					</div>
+				</div>
+			</div>
+
+			<div class="sixteen wide column">
+				<div class='ui segments'>
+					<div class="ui segment grid internally celled">
+						<div id="heatmap">
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="sixteen wide column">
+				<div class="ui segment">
+					<table class="ui celled padded table">
+						<thead>
+							<tr>
+								<th class="single line">Evidence Rating</th>
+								<th>Effect</th>
+								<th>Efficacy</th>
+								<th>Consensus</th>
+								<th>Comments</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<h2 class="ui center aligned header">A</h2>
+								</td>
+								<td class="single line">
+									Power Output
+								</td>
+								<td>
+									<div class="ui star rating" data-rating="3" data-max-rating="3"></div>
+								</td>
+								<td class="right aligned">
+									80% <br>
+									<a href="#">18 studies</a>
+								</td>
+								<td>Creatine supplementation is the reference compound for increasing muscular creatine levels; there is
+									variability in this increase, however, with some nonresponders.</td>
+							</tr>
+							<tr>
+								<td>
+									<h2 class="ui center aligned header">A</h2>
+								</td>
+								<td class="single line">
+									Weight
+								</td>
+								<td>
+									<div class="ui star rating" data-rating="3" data-max-rating="3"></div>
+								</td>
+								<td class="right aligned">
+									100% <br>
+									<a href="#">65 studies</a>
+								</td>
+								<td>Creatine is the reference compound for power improvement, with numbers from one meta-analysis to assess
+									potency</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="5">
+									<div class="ui right floated pagination menu">
+										<a class="icon item">
+											<i class="left chevron icon"></i>
+										</a>
+										<a class="item">1</a>
+										<a class="item">2</a>
+										<a class="item">3</a>
+										<a class="item">4</a>
+										<a class="icon item">
+											<i class="right chevron icon"></i>
+										</a>
+									</div>
+								</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="six wide column">
+				<div class="ui segment">
+					<table class="ui very compact celled table">
+						<thead class="full-width">
+							<tr>
+								<th class="ten wide">Student</th>
+								<th class="six wide">Correct Guesses</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<h4 class="ui image header">
+										<img src="/images/avatar2/small/lena.png" class="ui mini rounded image">
+										<div class="content">
+											Lena
+											<div class="sub header">Human Resources
+											</div>
+										</div>
+									</h4>
+								</td>
+								<td>
+									22
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h4 class="ui image header">
+										<img src="/images/avatar2/small/matthew.png" class="ui mini rounded image">
+										<div class="content">
+											Matthew
+											<div class="sub header">Fabric Design
+											</div>
+										</div>
+									</h4>
+								</td>
+								<td>
+									15
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h4 class="ui image header">
+										<img src="/images/avatar2/small/lindsay.png" class="ui mini rounded image">
+										<div class="content">
+											Lindsay
+											<div class="sub header">Entertainment
+											</div>
+										</div>
+									</h4>
+								</td>
+								<td>
+									12
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h4 class="ui image header">
+										<img src="/images/avatar2/small/mark.png" class="ui mini rounded image">
+										<div class="content">
+											Mark
+											<div class="sub header">Executive
+											</div>
+										</div>
+									</h4>
+								</td>
+								<td>
+									11
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="six wide column">
+				<div class="ui segment">
+					<div class="ui list">
+						<div class="item">
+							<img class="ui avatar image" src="/images/avatar2/small/rachel.png">
+							<div class="content">
+								<a class="header">Rachel</a>
+								<div class="description">Last seen watching <a><b>Arrested Development</b></a> just now.</div>
+							</div>
+						</div>
+						<div class="item">
+							<img class="ui avatar image" src="/images/avatar2/small/lindsay.png">
+							<div class="content">
+								<a class="header">Lindsay</a>
+								<div class="description">Last seen watching <a><b>Bob's Burgers</b></a> 10 hours ago.</div>
+							</div>
+						</div>
+						<div class="item">
+							<img class="ui avatar image" src="/images/avatar2/small/matthew.png">
+							<div class="content">
+								<a class="header">Matthew</a>
+								<div class="description">Last seen watching <a><b>The Godfather Part 2</b></a> yesterday.</div>
+							</div>
+						</div>
+						<div class="item">
+							<img class="ui avatar image" src="/images/avatar/small/jenny.jpg">
+							<div class="content">
+								<a class="header">Jenny Hess</a>
+								<div class="description">Last seen watching <a><b>Twin Peaks</b></a> 3 days ago.</div>
+							</div>
+						</div>
+						<div class="item">
+							<img class="ui avatar image" src="/images/avatar/small/veronika.jpg">
+							<div class="content">
+								<a class="header">Veronika Ossi</a>
+								<div class="description">Has not watched anything recently</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<div class="ui segment">
+			<div class="ui two column very relaxed grid">
+				<div class="column">
+					<p></p>
+					<p></p>
+					<p></p>
+					<p></p>
+				</div>
+				<div class="column">
+					<p></p>
+					<p></p>
+					<p></p>
+					<p></p>
+				</div>
+			</div>
+			<div class="ui vertical divider">
+
+			</div>
+		</div>
+
+	</div>
+	<script src="./radarChart.js"></script>
+	<!-- <script src="./heatmap.js"></script> -->
+	<script>
+		/* Radar chart design created by Nadieh Bremer - VisualCinnamon.com */
+
+		////////////////////////////////////////////////////////////// 
+		//////////////////////// Set-Up ////////////////////////////// 
+		////////////////////////////////////////////////////////////// 
+
+		var margin = {
+				top: 50,
+				right: 100,
+				bottom: 50,
+				left: 100
+			},
+			width = Math.min(600, window.innerWidth - 10) - margin.left - margin.right,
+			height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+
+		////////////////////////////////////////////////////////////// 
+		////////////////////////// Data ////////////////////////////// 
+		////////////////////////////////////////////////////////////// 
+
+		var data = [
+			[ //iPhone
+				{
+					axis: "IndentationError",
+					value: 0.36
+				},
+				{
+					axis: "SyntaxError",
+					value: 0.85
+				},
+				{
+					axis: "NameError",
+					value: 0.79
+				},
+			]
+		];
+
+		var dataSyntaxError = [
+			[ //iPhone
+				{
+					axis: "IndentationError",
+					value: 0.77
+				},
+				{
+					axis: "SyntaxError",
+					value: 0.63
+				},
+				{
+					axis: "NameError",
+					value: 0.51
+				},
+			]
+		];
+
+		var dataNameError = [
+			[ //iPhone
+				{
+					axis: "IndentationError",
+					value: 0.44
+				},
+				{
+					axis: "SyntaxError",
+					value: 0.72
+				},
+				{
+					axis: "NameError",
+					value: 0.82
+				},
+			]
+		];
+		////////////////////////////////////////////////////////////// 
+		//////////////////// Draw the Chart ////////////////////////// 
+		////////////////////////////////////////////////////////////// 
+
+		var color = d3.scaleOrdinal()
+			.range(["#EDC951", "#CC333F", "#00A0B0"]);
+
+		var radarChartOptions = {
+			w: width,
+			h: height,
+			margin: margin,
+			maxValue: 0.5,
+			levels: 5,
+			roundStrokes: true,
+			color: color
+		};
+		//Call function to draw the Radar chart
+		RadarChart("#radarChart_IndentationError", data, radarChartOptions);
+
+		RadarChart("#radarChart_SyntaxError", dataSyntaxError, radarChartOptions);
+
+		RadarChart("#radarChart_NameError", dataNameError, radarChartOptions);
+
+		// heatmap('#heatmap')
+	</script>
+</body>
+
+</html>
