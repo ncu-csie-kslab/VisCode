@@ -2,6 +2,9 @@ VisCode
 =======
 
 ## Requirements
+主機最低配置：
+- RAM: 4G
+
 作業系統僅測試過 `Ubuntu 18.04`。
 - Linux envirements
 - docker
@@ -39,6 +42,29 @@ sudo docker-compose build
 sudo docker-compose up
 ```
 
+## Upgrade
+首先關閉所有運行中的 container，並且移除。
+```sh
+sudo docker-compose stop
+sudo docker-compose rm
+```
+
+更新程式碼，例如使用 git 取得新版本:
+```sh
+git pull
+```
+
+如果有更新 `viscode-extension`，請重新 build 一個新的 docker image。
+```sh
+bash ./build-jupyter-image.sh
+```
+
+最後使用 `docker-compose` build，建立新的 container。
+```sh
+sudo docker-compose build
+sudo docker-compose up
+```
+
 ## Control
 關閉所有 container。
 ```sh
@@ -61,6 +87,7 @@ sudo docker-compose rm
 Service         | Port       
 ----------------|:-----------
 jupyterhub      | 8000       
+postgres        | 5432
 viscode-api     | 5000       
 kibana          | 5601
 elasticsearch01 | 9200, 9300 
