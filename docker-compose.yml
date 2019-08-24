@@ -1,0 +1,128 @@
+version: '3'
+services:
+
+  jupyterhub:
+    build: ./jupyterhub/
+    ports:
+      - 8000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py:ro
+    networks:
+      - viscode
+    depends_on:
+      - postgres
+
+  postgres:
+    build: ./postgres/
+    restart: always
+    environment:
+      POSTGRES_USER: kslab
+      POSTGRES_PASSWORD: Kslab35356
+    volumes:
+      - "./postgres/data:/var/lib/postgresql/data"
+    ports:
+      - 127.0.0.1:5432:5432
+    networks:
+      - viscode
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - viscode
+
+  viscode-api:
+    build: ./viscode-api-server/
+    ports:
+      - 127.0.0.1:5000:80
+    networks:
+      - viscode
+    environment:
+      - ELASTICSEARCH_HOSTS=es01,es02
+      - USE_MONGO=FALSE
+    env_file:
+      - 'database.env'
+    depends_on:
+      - es01
+      - es02
+      - postgres
+      
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1
+    restart: always
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./elasticsearch/esdata01:/usr/share/elasticsearch/data
+    ports:
+      - 127.0.0.1:9200:9200
+      - 127.0.0.1:9300:9300
+    networks:
+      - viscode
+    environment:
+      - node.name=es01
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02
+
+      # discovery.type: single-node
+      # ELASTIC_PASSWORD: ncukslksl
+      # network.host: "_non_loopback_"
+      - cluster.name=viscode-cluster
+      - bootstrap.memory_lock=true
+      # discovery.type: zen
+      # discovery.zen.ping.unicast.hosts: es01
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1
+    restart: always
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./elasticsearch/esdata02:/usr/share/elasticsearch/data
+    ports:
+      - 127.0.0.1:9201:9200
+      - 127.0.0.1:9301:9300
+    networks:
+      - viscode
+    environment:
+      - node.name=es02
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02
+      # discovery.type: single-node
+      # ELASTIC_PASSWORD: ncukslksl
+      # network.host: "_non_loopback_"
+      - cluster.name=viscode-cluster
+      - bootstrap.memory_lock=true
+      # discovery.type: zen
+      # discovery.zen.ping.unicast.hosts: es01
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.3.1
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    restart: always
+    ports:
+      - 127.0.0.1:5601:5601
+    networks:
+      - viscode
+    # environment:
+      # ELASTICSEARCH_URL: http://127.0.0.1:9200
+      # ELASTICSEARCH_USERNAME: elastic
+      # ELASTICSEARCH_PASSWORD: ncukslksl
+    depends_on:
+      - es01
+# volumes:
+#   logvolume01: {}
+networks:
+  viscode:
+    driver: bridge
+    

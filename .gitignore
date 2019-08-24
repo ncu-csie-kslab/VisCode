@@ -1,0 +1,9 @@
+# Mac finder file
+.DS_Store
+
+# IDE
+.vscode
+
+# data
+elasticsearch/esdata*
+postgres/data*

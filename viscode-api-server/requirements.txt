@@ -1,0 +1,6 @@
+flask
+pymongo
+elasticsearch
+psycopg2-binary
+requests
+python-dotenv

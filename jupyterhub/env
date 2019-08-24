@@ -1,0 +1,7 @@
+#export CUDA_HOME=/usr/local/cuda
+#export PATH=${CUDA_HOME}/bin/:$PATH
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64
+#export PATH=/usr/local/bin
+export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
+export LANG=en_US.UTF-8
+export JUPYTERHUB_CRYPT_KEY=ab972ca7ffe5d2e86c556f020988d276e97374039ac8a43fd8e116c04f2f1a94

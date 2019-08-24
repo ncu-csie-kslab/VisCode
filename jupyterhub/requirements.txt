@@ -1,0 +1,3 @@
+ipython
+dockerspawner
+psycopg2-binary
