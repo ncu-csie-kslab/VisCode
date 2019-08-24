@@ -7,6 +7,22 @@ VisCode
 - docker
 - docker-compose
 
+## System setting
+由於elasticsearch的需要，需修改`/etc/sysctl.conf`，新增下方設定，並重新啟動系統，或使用一次性指令設定。
+```conf
+vm.max_map_count=262144
+```
+
+一次性指令設定，立即生效，重開機後消失。
+```bash
+sudo sysctl -w vm.max_map_count=262144
+```
+
+查看目前系統設定值。
+```bash
+sysctl vm.max_map_count
+```
+
 ## Clear data
 注意：這兩個程式會清除所有資料。
 ```sh
@@ -50,3 +66,7 @@ kibana          | 5601
 elasticsearch01 | 9200, 9300 
 elasticsearch02 | 9201, 9301
 adminer         | 8080
+
+Jupyter 預設 admin 帳密。
+- 帳號：admin
+- 密碼：kslab35356
