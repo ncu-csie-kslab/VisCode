@@ -5,6 +5,7 @@ import os
 from notebook.utils import url_path_join as ujoin
 from notebook.base.handlers import IPythonHandler
 from tornado.web import RequestHandler
+from tornado import gen
 
 class UserAccessRolesHandler(IPythonHandler):
     
@@ -15,7 +16,7 @@ class UserAccessRolesHandler(IPythonHandler):
         self.viscode_api_host = os.getenv('VISCODE_API_SERVER_HOST', '127.0.0.1')
         self.viscode_api_port = os.getenv('VISCODE_API_SERVER_PORT', 5000)
 
-    @tornado.web.asynchronous
+    @gen.coroutine
     def get(self):
         role = None
         isAdmin = self.get_current_user()['admin']

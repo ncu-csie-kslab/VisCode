@@ -5,6 +5,7 @@ import os
 from notebook.utils import url_path_join as ujoin
 from notebook.base.handlers import IPythonHandler
 from tornado.web import RequestHandler
+from tornado import gen
 
 class CodingLoggerHandler(IPythonHandler):
     
@@ -15,7 +16,7 @@ class CodingLoggerHandler(IPythonHandler):
         self.viscode_api_host = os.getenv('VISCODE_API_SERVER_HOST', '127.0.0.1')
         self.viscode_api_port = os.getenv('VISCODE_API_SERVER_PORT', 5000)
 
-    @tornado.web.asynchronous
+    @gen.coroutine
     def post(self):
         post_data = json.loads(self.request.body.decode('utf-8'))
         events = ['code_execution', 'code_copy', 'code_paste', 'code_speed']
