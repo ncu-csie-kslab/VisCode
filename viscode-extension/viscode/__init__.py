@@ -12,8 +12,7 @@ def _jupyter_server_extension_paths():
             "module": "viscode.server_extension.user_access_roles"
         },{
             "module": "viscode.server_extension.tree_announcement"
-        },
-        {
+        },{
             "module": "viscode.server_extension.users"
         },
     ]
