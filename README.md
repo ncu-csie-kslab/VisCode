@@ -27,7 +27,7 @@ sysctl vm.max_map_count
 ```
 
 ## Clear data
-注意：這程式會清除資料。
+注意：這程式會清除所有資料。
 ```sh
 bash ./clear-all-data.sh
 ```
@@ -106,3 +106,12 @@ Jupyter 預設 admin 帳密。
 
 ## Data storage
 Jupyter 使用者的 workspace，透過 docker volume bind，會在 local 端的 `/jupyterhub_users` 底下。
+
+其餘的 postgres、elasticsearch01 與 elasticsearch02，存放在各自 Dockerfile 資料夾底下。
+
+Service         | path       
+----------------|:-----------
+jupyterhub      | /jupyter_users      
+postgres        | ./postgres/data
+elasticsearch01 | ./elasticsearch/esdata01
+elasticsearch02 | ./elasticsearch/esdata01
