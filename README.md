@@ -37,7 +37,7 @@ bash ./clear-postgres.sh
 請在 viscode 目錄下執行。
 ```sh
 bash ./build-jupyter-image.sh
-bash ./clear-elasticsearch.sh
+bash ./clear-all-data.sh
 sudo docker-compose build
 sudo docker-compose up
 ```
@@ -97,3 +97,6 @@ adminer         | 8080
 Jupyter 預設 admin 帳密。
 - 帳號：admin
 - 密碼：kslab35356
+
+## Data storage
+Jupyter 使用者的 workspace，透過 docker volume bind，會在 local 端的 `/jupyterhub_users` 底下。
