@@ -8,6 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py:ro
+      - /jupyterhub_users:/jupyterhub_users:rw
     networks:
       - viscode
     depends_on:
@@ -122,6 +123,15 @@ services:
       - es01
 # volumes:
 #   logvolume01: {}
+
+# volumes:
+#   jupyterhub_users:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       o: bind
+#       device: "/home/red/viscode/jupyterhub/users_data"
+
 networks:
   viscode:
     driver: bridge

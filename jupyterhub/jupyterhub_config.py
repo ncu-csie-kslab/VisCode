@@ -85,7 +85,7 @@ c.DockerSpawner.image = 'viscode-jupyter:latest'
 #c.DockerSpawner.host_ip = "127.0.0.1"
 notebook_dir = os.environ.get('DOCKER_NOTEBOOK_DIR') or '/home/jovyan/work'
 c.DockerSpawner.notebook_dir = notebook_dir
-# c.DockerSpawner.volumes = { '/jupyterhub/{username}': notebook_dir }
+c.DockerSpawner.volumes = { '/jupyterhub_users/{username}': notebook_dir }
 c.DockerSpawner.remove = True
 c.DockerSpawner.environment = {
     'VISCODE_API_SERVER_HOST' : 'viscode-api',
@@ -119,48 +119,51 @@ c.Spawner.http_timeout = 180
 
 import subprocess
 def create_dir_hook(spawner):
-    user_dir = os.path.join('/home/kslab/docker/jupyterhub', spawner.user.name)
-    user_course_dir = os.path.join(user_dir, '課程')
-    hw1 = []
-    hw2 = []
-    hw3 = []
-    for i in range(1, 6):
-        hw1.append(os.path.join(user_course_dir, '{}_HW1_{}.ipynb'.format(spawner.user.name[4:], i)))
-    for i in range(1, 5):
-        hw2.append(os.path.join(user_course_dir, '{}_HW2_{}.ipynb'.format(spawner.user.name[4:], i)))
-    for i in range(1, 7):
-        hw3.append(os.path.join(user_course_dir, '{}_HW3_{}.ipynb'.format(spawner.user.name[4:], i)))
+    user_dir = os.path.join('/jupyterhub_users', spawner.user.name)
+    # user_course_dir = os.path.join(user_dir, '課程')
+    # hw1 = []
+    # hw2 = []
+    # hw3 = []
+    # for i in range(1, 6):
+    #     hw1.append(os.path.join(user_course_dir, '{}_HW1_{}.ipynb'.format(spawner.user.name[4:], i)))
+    # for i in range(1, 5):
+    #     hw2.append(os.path.join(user_course_dir, '{}_HW2_{}.ipynb'.format(spawner.user.name[4:], i)))
+    # for i in range(1, 7):
+    #     hw3.append(os.path.join(user_course_dir, '{}_HW3_{}.ipynb'.format(spawner.user.name[4:], i)))
     if not os.path.exists(user_dir):
         os.mkdir(user_dir)
-        os.chown(user_dir, 1000, 1000)
-    if not os.path.exists(user_course_dir):
-        os.mkdir(user_course_dir)
-    os.chown(user_course_dir, 999, 100)
-    os.chmod(user_course_dir, 0o677)
-    for hw in hw1:
-        if not os.path.exists(hw):
-            with open(hw, 'w') as f:
-                f.write('{"cells": [],"metadata": {},"nbformat": 4, "nbformat_minor": 2}')
-                f.close()
-        os.chmod(hw, 0o677)
-        os.chown(hw, 1000, 100)
-    for hw in hw2:
-        if not os.path.exists(hw):
-            with open(hw, 'w') as f:
-                f.write('{"cells": [],"metadata": {},"nbformat": 4, "nbformat_minor": 2}')
-                f.close()
-        os.chmod(hw, 0o677)
-        os.chown(hw, 1000, 100)
-    for hw in hw3:
-        if not os.path.exists(hw):
-            with open(hw, 'w') as f:
-                f.write('{"cells": [],"metadata": {},"nbformat": 4, "nbformat_minor": 2}')
-                f.close()
-        os.chmod(hw, 0o677)
-        os.chown(hw, 1000, 100)
+        os.chown(user_dir, 1000, 100)
+        # os.chmod(notebook_dir, 0o675)
+    # if not os.path.exists(user_course_dir):
+    #     os.mkdir(user_course_dir)
+    # os.chown(user_course_dir, 999, 100)
+    # os.chmod(user_course_dir, 0o677)
+    # for hw in hw1:
+    #     if not os.path.exists(hw):
+    #         with open(hw, 'w') as f:
+    #             f.write('{"cells": [],"metadata": {},"nbformat": 4, "nbformat_minor": 2}')
+    #             f.close()
+    #     os.chmod(hw, 0o677)
+    #     os.chown(hw, 1000, 100)
+    # for hw in hw2:
+    #     if not os.path.exists(hw):
+    #         with open(hw, 'w') as f:
+    #             f.write('{"cells": [],"metadata": {},"nbformat": 4, "nbformat_minor": 2}')
+    #             f.close()
+    #     os.chmod(hw, 0o677)
+    #     os.chown(hw, 1000, 100)
+    # for hw in hw3:
+    #     if not os.path.exists(hw):
+    #         with open(hw, 'w') as f:
+    #             f.write('{"cells": [],"metadata": {},"nbformat": 4, "nbformat_minor": 2}')
+    #             f.close()
+    #     os.chmod(hw, 0o677)
+    #     os.chown(hw, 1000, 100)
     #    subprocess.call(["sudo", "-u", 'kslab', 'mkdir', '-p', user_dir])
     #if not os.path.exists(user_course_dir):
     #    subprocess.call(["sudo", 'mkdir', '-p', user_course_dir])
+
+c.Spawner.pre_spawn_hook = create_dir_hook
 
 ## Extra settings overrides to pass to the tornado application.
 c.JupyterHub.tornado_settings = {}
