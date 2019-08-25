@@ -27,10 +27,16 @@ sysctl vm.max_map_count
 ```
 
 ## Clear data
-注意：這兩個程式會清除所有資料。
+注意：這程式會清除資料。
+```sh
+bash ./clear-all-data.sh
+```
+
+個別清除資料：
 ```sh
 bash ./clear-elasticsearch.sh
 bash ./clear-postgres.sh
+bash ./clear-jupyterhub.sh
 ```
 
 ## Installation
