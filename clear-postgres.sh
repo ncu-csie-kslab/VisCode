@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo rm -r ./postgres/data
+sudo rm -rf ./postgres/data
