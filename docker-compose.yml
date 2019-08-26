@@ -121,16 +121,6 @@ services:
       # ELASTICSEARCH_PASSWORD: ncukslksl
     depends_on:
       - es01
-# volumes:
-#   logvolume01: {}
-
-# volumes:
-#   jupyterhub_users:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: "/home/red/viscode/jupyterhub/users_data"
 
 networks:
   viscode:
