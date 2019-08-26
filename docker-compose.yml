@@ -43,7 +43,7 @@ services:
       - viscode
     environment:
       - ELASTICSEARCH_HOSTS=es01,es02
-      - USE_MONGO=FALSE
+      - USE_MONGODB=FALSE
     env_file:
       - 'database.env'
     depends_on:
