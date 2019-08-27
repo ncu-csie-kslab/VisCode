@@ -111,7 +111,7 @@ Jupyter 使用者的 workspace，透過 docker volume bind，會在 local 端的
 
 Service         | path       
 ----------------|:-----------
-jupyterhub      | /jupyter_users      
+jupyterhub      | /jupyterhub_users      
 postgres        | ./postgres/data
 elasticsearch01 | ./elasticsearch/esdata01
 elasticsearch02 | ./elasticsearch/esdata01
