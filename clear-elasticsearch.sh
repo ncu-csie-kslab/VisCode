@@ -1,6 +1,6 @@
 #!/bin/bash
-sudo rm -r ./elasticsearch/esdata01
-sudo rm -r ./elasticsearch/esdata02
+sudo rm -rf ./elasticsearch/esdata01
+sudo rm -rf ./elasticsearch/esdata02
 
 mkdir ./elasticsearch/esdata01
 mkdir ./elasticsearch/esdata02
