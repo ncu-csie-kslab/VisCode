@@ -7,7 +7,7 @@ VisCode
 
 作業系統僅測試過 `Ubuntu 18.04`。
 - Linux envirements
-- docker
+- docker: 17.12.0+
 - docker-compose
 
 ## System setting
