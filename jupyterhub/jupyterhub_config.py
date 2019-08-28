@@ -5,6 +5,20 @@ from tornado import gen
 from IPython.utils.traitlets import Dict
 from jupyterhub.auth import Authenticator
 from psycopg2 import pool
+import os
+
+POSTGRES_USER = os.getenv('POSTGRES_USER')
+POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
+POSTGRES_HOST = os.getenv('POSTGRES_HOST')
+POSTGRES_PORT = os.getenv('POSTGRES_PORT', 5432)
+
+c.JupyterHub.db_url = 'postgresql://{user}:{password}@{host}:{port}/jupyterhub'.format(
+    user=POSTGRES_USER,
+    password=POSTGRES_PASSWORD,
+    host=POSTGRES_HOST,
+    port=POSTGRES_PORT
+)
+
 class KslabAuthenticator(Authenticator):
 
     passwords = Dict(config=True,
@@ -12,8 +26,8 @@ class KslabAuthenticator(Authenticator):
     )
     
     pg_pool = pool.ThreadedConnectionPool(
-    5, 10, user="kslab", password="Kslab35356", host="postgres",
-    port="5432", database='jupyterhub')
+    5, 15, user=POSTGRES_USER, password=POSTGRES_PASSWORD, host=POSTGRES_HOST,
+    port=POSTGRES_PORT, database='jupyterhub')
     
     @gen.coroutine
     def authenticate(self, handler, data):
@@ -43,7 +57,7 @@ class KslabAuthenticator(Authenticator):
             return
         spawner.environment['UPSTREAM_TOKEN'] = auth_state['upstream_token']
 
-import os
+
 #os.environ['']
 #os.environ['OAUTH2_USERDATA_URL'] = "https://portal3g.ncu.edu.tw/apis/oauth/v1/info"
 #os.environ['OAUTH2_TOKEN_URL'] = "https://portal3g.ncu.edu.tw/oauth2/token"

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
 
   jupyterhub:
@@ -11,6 +11,8 @@ services:
       - /jupyterhub_users:/jupyterhub_users:rw
     networks:
       - viscode
+    env_file:
+      - 'database.env'
     depends_on:
       - postgres
 
@@ -124,5 +126,6 @@ services:
 
 networks:
   viscode:
+    name: viscode_viscode
     driver: bridge
     
