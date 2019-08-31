@@ -12,6 +12,8 @@ POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
 POSTGRES_HOST = os.getenv('POSTGRES_HOST')
 POSTGRES_PORT = os.getenv('POSTGRES_PORT', 5432)
 
+JUPYTERHUB_AUTH_METHOD = os.getenv('JUPYTERHUB_AUTH_METHOD', 'Default')
+
 c.JupyterHub.db_url = 'postgresql://{user}:{password}@{host}:{port}/jupyterhub'.format(
     user=POSTGRES_USER,
     password=POSTGRES_PASSWORD,
@@ -64,8 +66,15 @@ class KslabAuthenticator(Authenticator):
 #os.environ['OAUTH2_AUTHORIZE_URL'] = "https://portal3g.ncu.edu.tw/oauth2/authorization"
 #os.environ['OAUTH2_USERNAME_KEY'] = "identifier"
 
+if JUPYTERHUB_AUTH_METHOD == 'Default':
+    c.JupyterHub.authenticator_class = KslabAuthenticator
+elif JUPYTERHUB_AUTH_METHOD == 'LTI':
+    c.JupyterHub.authenticator_class = 'ltiauthenticator.LTIAuthenticator'
+    c.LTIAuthenticator.consumers = {
+        os.environ['LTI_CLIENT_KEY']: os.environ['LTI_CLIENT_SECRET']
+    }
+
 #c.JupyterHub.authenticator_class = 'oauthenticator.ncuportal.NCUPortalOAuthenticator'
-c.JupyterHub.authenticator_class = KslabAuthenticator
 #c.NCUPortalOAuthenticator.oauth_callback_url = 'https://viscode.moocs.tw/hub/oauth_callback'
 #c.NCUPortalOAuthenticator.client_id = '#20190115182958-qzESHNSm'
 #c.NCUPortalOAuthenticator.client_secret = 'NJZEujCOqMCTzMn1Ko6VsXDtMCCnPHmIUh9lBbaA078I7pDBC6Tlz1wMUM01Fvxh'

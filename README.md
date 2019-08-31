@@ -115,3 +115,25 @@ jupyterhub      | /jupyterhub_users
 postgres        | ./postgres/data
 elasticsearch01 | ./elasticsearch/esdata01
 elasticsearch02 | ./elasticsearch/esdata01
+
+## Auth setting
+
+### Default
+預設使用 Postgres 記錄使用者帳號、密碼與驗證。
+
+```yml
+jupyterhub:
+    environment:
+        JUPYTERHUB_AUTH_METHOD: Default
+```
+
+### LTI
+請修改 `docker-compose.yml` 中 jupyterhub 的環境參數設定。
+
+```yml
+jupyterhub:
+    environment:
+        JUPYTERHUB_AUTH_METHOD: LTI
+        LTI_CLIENT_KEY: your_key
+        LTI_CLIENT_SECRET: your_secret
+```
