@@ -1,4 +1,5 @@
 ipython
 dockerspawner
 psycopg2-binary
+oauthenticator
 git+https://github.com/BlackTeaToast/ltiauthenticator.git

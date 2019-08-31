@@ -10,6 +10,13 @@ VisCode
 - docker: 17.12.0+
 - docker-compose
 
+## Clone code
+Clone時需要注意目的地資料夾的位置，以`viscode`最佳，其餘者需要自行注意docker網路配置，主因是Jupyterhub及其DockerSpwner是透過docker的網路互動
+```bash
+git clone https://github.com/BlackTeaToast/VisCode.git viscode
+
+```
+
 ## System setting
 由於elasticsearch的需要，需修改`/etc/sysctl.conf`，新增下方設定，並重新啟動系統，或使用一次性指令設定。
 ```conf
