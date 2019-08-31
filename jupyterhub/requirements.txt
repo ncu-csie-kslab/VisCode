@@ -1,3 +1,5 @@
 ipython
 dockerspawner
 psycopg2-binary
+jupyterhub-ltiauthenticator
+oauthenticator
