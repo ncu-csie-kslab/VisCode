@@ -1,0 +1,2 @@
+*/1 * * * * bitnami sudo su daemon -s /bin/sh -c "/opt/bitnami/php/bin/php /opt/bitnami/moodle/admin/cli/cron.php > /dev/null"
+

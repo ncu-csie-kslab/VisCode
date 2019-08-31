@@ -1,0 +1,1 @@
+a:3:{s:19:"auth_ltidescription";s:209:"The LTI authentication plugin, together with the 'Publish as LTI tool' enrolment plugin, allows remote users to access selected courses and activities. In other words, Moodle functions as an LTI tool provider.";s:10:"pluginname";s:3:"LTI";s:16:"privacy:metadata";s:63:"The LTI authentication plugin does not store any personal data.";}

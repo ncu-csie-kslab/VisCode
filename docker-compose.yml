@@ -1,10 +1,53 @@
 version: '3.5'
 services:
 
+  nginx:
+    image: nginx
+    volumes:
+      - './nginx/nginx_config/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - './nginx/nginx_sites:/etc/nginx_sites:ro'
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - viscode
+
+  mariadb:
+    user: root
+    image: 'bitnami/mariadb:latest'
+    command: chown -R 1001:1001 /bitnami/mariadb
+    environment:
+      - MARIADB_USER=bn_moodle
+      - MARIADB_DATABASE=bitnami_moodle
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - './mariadb/data:/bitnami'
+    ports:
+      - 127.0.0.1:3306:3306
+    networks:
+      - viscode
+
+  moodle:
+    image: 'bitnami/moodle:3'
+    environment:
+      - MARIADB_HOST=mariadb
+      - MARIADB_PORT_NUMBER=3306
+      - MOODLE_DATABASE_USER=bn_moodle
+      - MOODLE_DATABASE_NAME=bitnami_moodle
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 0.0.0.0:8888:80
+    volumes:
+      - './moodle/data:/bitnami'
+    depends_on:
+      - mariadb
+    networks:
+      - viscode
+
   jupyterhub:
     build: ./jupyterhub/
     ports:
-      - 0.0.0.0:8000:8000
+      - 0.0.0.0:8001:8000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py:ro

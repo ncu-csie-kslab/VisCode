@@ -16,6 +16,12 @@ Clone時需要注意目的地資料夾的位置，以`viscode`最佳，其餘者
 git clone https://github.com/BlackTeaToast/VisCode.git viscode
 
 ```
+## Root permission
+若使用root權限的用戶，需要針對下列資料夾修改權限
+```bash
+chown 1001:1001 -R ./mariadb/
+```
+
 
 ## System setting
 由於elasticsearch的需要，需修改`/etc/sysctl.conf`，新增下方設定，並重新啟動系統，或使用一次性指令設定。
