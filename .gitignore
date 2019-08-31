@@ -8,3 +8,4 @@
 elasticsearch/esdata*
 postgres/data*
 mariadb/data*
+moodle/data*

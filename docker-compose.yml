@@ -3,9 +3,10 @@ services:
 
   nginx:
     image: nginx
+    container_name: nginx
     volumes:
-      - './nginx/nginx_config/nginx.conf:/etc/nginx/nginx.conf:ro'
-      - './nginx/nginx_sites:/etc/nginx_sites:ro'
+      - ./nginx/nginx_config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/nginx_sites:/etc/nginx_sites:ro
     ports:
       - 80:80
       - 443:443
@@ -13,21 +14,23 @@ services:
       - viscode
 
   mariadb:
+    container_name: mariadb
+    image: bitnami/mariadb:latest
     user: root
-    image: 'bitnami/mariadb:latest'
-    command: chown -R 1001:1001 /bitnami/mariadb
+    #command: 'chown -R 1001:1001 /bitnami'
     environment:
       - MARIADB_USER=bn_moodle
       - MARIADB_DATABASE=bitnami_moodle
       - ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - './mariadb/data:/bitnami'
+      - ./mariadb/data:/bitnami
     ports:
       - 127.0.0.1:3306:3306
     networks:
       - viscode
 
   moodle:
+    container_name: moodle
     image: 'bitnami/moodle:3'
     environment:
       - MARIADB_HOST=mariadb
@@ -45,6 +48,7 @@ services:
       - viscode
 
   jupyterhub:
+    container_name: jupyterhub
     build: ./jupyterhub/
     ports:
       - 0.0.0.0:8001:8000
@@ -60,19 +64,21 @@ services:
       - postgres
 
   postgres:
+    container_name: postgresql
     build: ./postgres/
     restart: always
     environment:
       POSTGRES_USER: kslab
       POSTGRES_PASSWORD: Kslab35356
     volumes:
-      - "./postgres/data:/var/lib/postgresql/data"
+      - ./postgres/data:/var/lib/postgresql/data
     ports:
       - 127.0.0.1:5432:5432
     networks:
       - viscode
 
   adminer:
+    container_name: adminer
     image: adminer
     restart: always
     ports:
@@ -81,6 +87,7 @@ services:
       - viscode
 
   viscode-api:
+    container_name: viscode-api
     build: ./viscode-api-server/
     ports:
       - 127.0.0.1:5000:80
@@ -97,6 +104,7 @@ services:
       - postgres
       
   es01:
+    container_name: elasticserach_01
     image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1
     restart: always
     volumes:
@@ -125,6 +133,7 @@ services:
         hard: -1
 
   es02:
+    container_name: elasticserach_02
     image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1
     restart: always
     volumes:
@@ -152,6 +161,7 @@ services:
         hard: -1
 
   kibana:
+    container_name: kibana
     image: docker.elastic.co/kibana/kibana:7.3.1
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro

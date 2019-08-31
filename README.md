@@ -105,8 +105,10 @@ sudo docker-compose rm
 
 Service         | Port       
 ----------------|:-----------
+moodle          | 8888
 jupyterhub      | 8000       
 postgres        | 5432
+mariadb         | 3306
 viscode-api     | 5000       
 kibana          | 5601
 elasticsearch01 | 9200, 9300 
@@ -124,7 +126,9 @@ Jupyter 使用者的 workspace，透過 docker volume bind，會在 local 端的
 
 Service         | path       
 ----------------|:-----------
+moodle          | ./moodle/data
 jupyterhub      | /jupyterhub_users      
 postgres        | ./postgres/data
+mariadb         | ./mariadb/data
 elasticsearch01 | ./elasticsearch/esdata01
 elasticsearch02 | ./elasticsearch/esdata01
