@@ -119,6 +119,10 @@ Jupyter 預設 admin 帳密。
 - 帳號：admin
 - 密碼：kslab35356
 
+Moodle 預設 admin帳密
+- 帳號: user
+- 密碼: bitnami
+
 ## Data storage
 Jupyter 使用者的 workspace，透過 docker volume bind，會在 local 端的 `/jupyterhub_users` 底下。
 
