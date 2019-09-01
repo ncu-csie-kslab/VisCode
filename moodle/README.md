@@ -29,6 +29,12 @@
 
 
 ## LTI (learning tools interoperability)
+### External Tools
+* Site administration / Plugins / Activity modules / External tool / Manage preconfigured tools
+* Jupyterhub URL: jupyterhub.viscode.org/hub/lti/launch
+
+### Add LTI in Course
+* Option1: Site home / Calculus / Edit settings > Turn editing on > Add an activity or resource > Jupyterhub
 
 
 ## External Tools > Add LTI
