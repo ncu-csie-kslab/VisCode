@@ -7,6 +7,10 @@ services:
     volumes:
       - ./nginx/nginx_config/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/nginx_sites:/etc/nginx_sites:ro
+    #environment:
+    #  - NGINX_HOST=viscode.org
+    #  - VISCODE_HOST_NAME=viscode.org
+    #  - VISCODE_IP_ADDR=140.115.53.155
     ports:
       - 80:80
       - 443:443
