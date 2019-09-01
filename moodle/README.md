@@ -25,8 +25,10 @@
 * Site administration / Courses / Manage courses and categories / $Category / Enrolled Users
 
 ### Enroll method
-* Site administration / Courses / Manage courses and categories / $Category / Enrolled Users / Enrolment methods
+* Site administration / Courses / Manage courses and categories / $Category / Enrolled Users > Enrolment methods
 
+### Self-enroll
+* Site administration / Courses / Manage courses and categories / $Category / Enrolled Users > Enrolment methods > Add method
 
 ## LTI (learning tools interoperability)
 ### External Tools
@@ -36,8 +38,5 @@
 ### Add LTI in Course
 * Option1: Site home / Calculus / Edit settings > Turn editing on > Add an activity or resource > Jupyterhub
 
-
-## External Tools > Add LTI
-## Course > self-erollment
 ## Outgoining > Email
-## Course > Add LTI
+
