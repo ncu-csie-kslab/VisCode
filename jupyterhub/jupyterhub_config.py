@@ -65,7 +65,13 @@ class KslabAuthenticator(Authenticator):
 #os.environ['OAUTH2_USERNAME_KEY'] = "identifier"
 
 #c.JupyterHub.authenticator_class = 'oauthenticator.ncuportal.NCUPortalOAuthenticator'
-c.JupyterHub.authenticator_class = KslabAuthenticator
+#c.JupyterHub.authenticator_class = KslabAuthenticator
+
+c.JupyterHub.authenticator_class = 'ltiauthenticator.LTIAuthenticator'
+c.LTIAuthenticator.consumers = {
+        "ffb0305e541d97ce2488f61280de195cf67bf5a1acee5ab2b582a647400f152b": "044ac6f35162ad4d9670a169e46dc783d22997328581c8736f4748a044876d3d"
+}
+
 #c.NCUPortalOAuthenticator.oauth_callback_url = 'https://viscode.moocs.tw/hub/oauth_callback'
 #c.NCUPortalOAuthenticator.client_id = '#20190115182958-qzESHNSm'
 #c.NCUPortalOAuthenticator.client_secret = 'NJZEujCOqMCTzMn1Ko6VsXDtMCCnPHmIUh9lBbaA078I7pDBC6Tlz1wMUM01Fvxh'
@@ -77,7 +83,7 @@ c.JupyterHub.authenticator_class = KslabAuthenticator
 #  
 #  .. deprecated: 0.9
 #      Use JupyterHub.bind_url
-#c.JupyterHub.base_url = '/'
+c.JupyterHub.base_url = '/'
 
 # c.JupyterHub.bind_url = 'httpss://0.0.0.0:8000'
 c.JupyterHub.cookie_max_age_days = 0.16666
