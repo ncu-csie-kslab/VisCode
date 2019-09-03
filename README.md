@@ -144,3 +144,11 @@ jupyterhub:
         LTI_CLIENT_KEY: your_key
         LTI_CLIENT_SECRET: your_secret
 ```
+
+#### 使用者辨別欄位設定
+預設使用 `user_id` 作為識別不同使用者的參考，如果需要改使用其他參數，請指定 `LTI_USER_ID_FIELD` 參數。
+
+##### 使用 Moodle 帳號
+```yml
+LTI_USER_ID_FIELD: ext_user_username
+```
