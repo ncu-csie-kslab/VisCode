@@ -142,7 +142,7 @@ c.Spawner.http_timeout = 180
 
 import subprocess
 def create_dir_hook(spawner):
-    user_dir = os.path.join('/jupyterhub_users', spawner.user.name)
+    user_dir = os.path.join('/jupyterhub_users', spawner.escaped_name)
     # user_course_dir = os.path.join(user_dir, '課程')
     # hw1 = []
     # hw2 = []
