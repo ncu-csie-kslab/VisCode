@@ -73,6 +73,7 @@ elif JUPYTERHUB_AUTH_METHOD == 'LTI':
     c.LTIAuthenticator.consumers = {
         os.environ['LTI_CLIENT_KEY']: os.environ['LTI_CLIENT_SECRET']
     }
+    c.Authenticator.enable_auth_state = True
 
 #c.JupyterHub.authenticator_class = 'oauthenticator.ncuportal.NCUPortalOAuthenticator'
 #c.NCUPortalOAuthenticator.oauth_callback_url = 'https://viscode.moocs.tw/hub/oauth_callback'
@@ -112,7 +113,8 @@ c.DockerSpawner.volumes = { '/jupyterhub_users/{username}': notebook_dir }
 c.DockerSpawner.remove = True
 c.DockerSpawner.environment = {
     'VISCODE_API_SERVER_HOST' : 'viscode-api',
-    'VISCODE_API_SERVER_PORT' : 80
+    'VISCODE_API_SERVER_PORT' : 80,
+    'JUPYTERHUB_AUTH_METHOD': JUPYTERHUB_AUTH_METHOD
 }
 c.DockerSpawner.extra_create_kwargs = {
 #    'network_disabled' : True

@@ -6,6 +6,7 @@ from notebook.utils import url_path_join as ujoin
 from notebook.base.handlers import IPythonHandler
 from tornado.web import RequestHandler
 from tornado import gen
+from viscode.utils import get_default_log
 
 class NotebookLoggerHandler(IPythonHandler):
     
@@ -22,10 +23,11 @@ class NotebookLoggerHandler(IPythonHandler):
         
         username = self.get_current_user()['name']
 
-        log_data = {
+        log_data = get_default_log()
+        log_data.update({
             'username': username,
             'event': 'notebook_open',
-        }
+        })
         log_data.update(post_data)
         
         # self.mylog.info(data)

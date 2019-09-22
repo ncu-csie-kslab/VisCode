@@ -143,6 +143,12 @@ jupyterhub:
         JUPYTERHUB_AUTH_METHOD: LTI
         LTI_CLIENT_KEY: your_key
         LTI_CLIENT_SECRET: your_secret
+        JUPYTERHUB_CRYPT_KEY: your_crypt_key
+```
+
+`JUPYTERHUB_CRYPT_KEY` 生成指令：
+```bash
+openssl rand -hex 32
 ```
 
 #### 使用者辨別欄位設定

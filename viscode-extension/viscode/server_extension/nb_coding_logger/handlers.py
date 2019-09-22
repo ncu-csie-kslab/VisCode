@@ -6,6 +6,7 @@ from notebook.utils import url_path_join as ujoin
 from notebook.base.handlers import IPythonHandler
 from tornado.web import RequestHandler
 from tornado import gen
+from viscode.utils import get_default_log
 
 class CodingLoggerHandler(IPythonHandler):
     
@@ -23,21 +24,12 @@ class CodingLoggerHandler(IPythonHandler):
         username = self.get_current_user()['name']
 
         if post_data['event'] in events:
-            log_data = {
+            log_data = get_default_log()
+            log_data.update({
                 'username': username
-            }
+            })
             log_data.update(post_data)
             
-            # self.mylog.info(data)
-            # if data['isError'] == True:
-            #     log_data['isError'] = True
-            #     log_data['errorName'] = data['errorName']
-            #     self.log.info('{} | {} '.format(username, data['errorName']))
-            # else :
-            #     log_data['isError'] = False
-            #     self.log.info('{} | {}'.format(username, 'Pass'))
-            # print(self.viscode_api_host, ' ', self.viscode_api_port)
-
             requests.post('http://{}:{}/logs'.format(self.viscode_api_host, self.viscode_api_port), json=log_data)
         self.finish()
 

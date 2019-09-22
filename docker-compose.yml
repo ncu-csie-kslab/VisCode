@@ -16,6 +16,7 @@ services:
       # LTI_CLIENT_KEY: 5282f7bfd4d5845684e6775a715b1aebe3d3001afc05a9bb0114f4cd71ac9a0a
       # LTI_CLIENT_SECRET: 1747cfa7de220ef5dcc7b2d2a5ad32e83665fedb87c1623d639dc015ffe8f547
       # LTI_USER_ID_FIELD: ext_user_username
+      # JUPYTERHUB_CRYPT_KEY: 94d02234afb5ce12bf8c045ec3d8cc4c1166f196f76d6ac4e2ca6f8eb5b2bf66
     env_file:
       - 'database.env'
     depends_on:
