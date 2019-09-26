@@ -60,6 +60,7 @@ sudo docker-compose up
 ```sh
 sudo docker-compose stop
 sudo docker-compose rm
+sudo docker rmi viscode_jupyterhub
 ```
 
 更新程式碼，例如使用 git 取得新版本:
