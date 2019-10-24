@@ -50,8 +50,11 @@ services:
     networks:
       - viscode
     environment:
-      - ELASTICSEARCH_HOSTS=es01,es02
-      - USE_MONGODB=FALSE
+      ELASTICSEARCH_HOSTS: es01,es02
+      USE_MONGODB: 1
+      MONGODB_HOST: 140.115.53.147
+      MONGODB_USER: readWrite_user
+      MONGODB_PASSWORD: kslab_readwrite
     env_file:
       - 'database.env'
     depends_on:
