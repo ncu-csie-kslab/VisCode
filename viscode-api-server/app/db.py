@@ -12,6 +12,8 @@ es_host_list = es_hosts.split(',')
 
 mongodb_host = os.getenv('MONGODB_HOST', '127.0.0.1')
 mongodb_port = os.getenv('MONGODB_PORT', '27017')
+mongodb_user = os.getenv('MONGODB_USER', 'user')
+mongodb_password = os.getenv('MONGODB_PASSWORD', 'password')
 use_mongodb = True if os.getenv('USE_MONGODB', 'FALSE') == '1' else False
 
 pg_host = os.getenv('POSTGRES_HOST', '127.0.0.1')
