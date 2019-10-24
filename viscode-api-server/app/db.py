@@ -30,7 +30,7 @@ if use_mongodb:
         print('MongoDB connection created successfully')
     else:
         print('Failed to create MongoDB connection')
-    jupyterhub = client.jupyterhub
+    jupyterhub = client.VISCODE #DB name
 else:
     jupyterhub = None
     print('To available MongoDB, set USE_MONGODB=1')
