@@ -12,7 +12,7 @@ es_host_list = es_hosts.split(',')
 
 mongodb_host = os.getenv('MONGODB_HOST', '127.0.0.1')
 mongodb_port = os.getenv('MONGODB_PORT', '27017')
-use_mongodb = True if os.getenv('USE_MONGODB', 'FALSE') == 'TRUE' else False
+use_mongodb = True if os.getenv('USE_MONGODB', 'FALSE') == 1 else False
 
 pg_host = os.getenv('POSTGRES_HOST', '127.0.0.1')
 pg_port = os.getenv('POSTGRES_PORT', 5432)
@@ -20,16 +20,20 @@ pg_user = os.getenv('POSTGRES_USER', 'postgres')
 pg_password = os.getenv('POSTGRES_PASSWORD', '')
 pg_database = os.getenv('POSTGRES_DATABASE', 'jupyterhub')
 
-print(es_host_list)
+#print(es_host_list)
 
 # MongoDB
 if use_mongodb:
-    client = MongoClient(maxPoolSize=30, connect=False)
+    #client = MongoClient(maxPoolSize=30, connect=False)
+    client = MongoClient('mongodb://{}:{}@{}:{}/'.format(mongodb_user, mongodb_password, mongodb_host, mongodb_port))
     if client:
         print('MongoDB connection created successfully')
+    else:
+        print('Failed to create MongoDB connection')
     jupyterhub = client.jupyterhub
 else:
     jupyterhub = None
+    print('To available MongoDB, set USE_MONGODB=1')
     
 # Elasticsearch
 es = Elasticsearch(
