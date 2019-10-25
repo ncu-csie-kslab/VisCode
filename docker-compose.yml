@@ -52,9 +52,9 @@ services:
     environment:
       ELASTICSEARCH_HOSTS: es01,es02
       USE_MONGODB: 1
-      MONGODB_HOST: 140.115.53.147
-      MONGODB_USER: readWrite_user
-      MONGODB_PASSWORD: kslab_readwrite
+      MONGODB_HOST: YOUR_HOST
+      MONGODB_USER: USER
+      MONGODB_PASSWORD: PASSWORD
     env_file:
       - 'database.env'
     depends_on:
