@@ -28,11 +28,13 @@ pg_database = os.getenv('POSTGRES_DATABASE', 'jupyterhub')
 if use_mongodb:
     #client = MongoClient(maxPoolSize=30, connect=False)
     client = MongoClient('mongodb://{}:{}@{}:{}/'.format(mongodb_user, mongodb_password, mongodb_host, mongodb_port))
-    if client:
+    try:
+        test = client.server_info()
         print('MongoDB connection created successfully')
-    else:
+        jupyterhub = client.VISCODE #DB name
+    except:
         print('Failed to create MongoDB connection')
-    jupyterhub = client.VISCODE #DB name
+        jupyterhub = None
 else:
     jupyterhub = None
     print('To available MongoDB, set USE_MONGODB=1')
