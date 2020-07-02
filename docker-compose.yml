@@ -12,6 +12,8 @@ services:
     networks:
       - viscode
     environment:
+      NOTEBOOK_TIMEOUT: 60
+      JUPYTER_SERVER_TIMEOUT: 180
       JUPYTERHUB_AUTH_METHOD: Default
       # LTI_CLIENT_KEY: 5282f7bfd4d5845684e6775a715b1aebe3d3001afc05a9bb0114f4cd71ac9a0a
       # LTI_CLIENT_SECRET: 1747cfa7de220ef5dcc7b2d2a5ad32e83665fedb87c1623d639dc015ffe8f547

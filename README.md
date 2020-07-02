@@ -5,7 +5,11 @@ VisCode
 主機最低配置：
 - RAM: 4G
 
-作業系統僅測試過 `Ubuntu 18.04`。
+作業系統 (測試過)：
+- Ubuntu 20.04
+- Ubuntu 18.04
+
+環境需求：
 - Linux envirements
 - docker: 17.12.0+
 - docker-compose
@@ -158,4 +162,24 @@ openssl rand -hex 32
 ##### 使用 Moodle 帳號
 ```yml
 LTI_USER_ID_FIELD: ext_user_username
+```
+
+## Resource Saving
+由於當使用者登入後，使用者的 Jupyter Notebook Server 與開啟的 Notebook 會一直存在，除非使用者手動關閉，因此會一直占用系統資源。
+
+提供兩個參數在 Jupyterhub 進行節省資源：
+- NOTEBOOK_TIMEOUT: Notebook 存活時間(分鐘)，當使用者把執行的 Notebook 網頁關閉或斷線時，超過時間關閉該 Notebook。
+- JUPYTER_SERVER_TIMEOUT: 當 Jupyter Notebook Server 超過時間(分鐘)沒有動作時關閉，也就是使用者的 container 會被關閉。
+
+以下方設置為例，使用者執行的 Notebook 會在 60 分鐘關閉，整個使用者的 Jupyter 如果沒有任何活動則在 180 分鐘關閉。
+```yml
+jupyterhub:
+    environment:
+        NOTEBOOK_TIMEOUT: 60
+        JUPYTER_SERVER_TIMEOUT: 180
+```
+
+當使用者 Jupyter Notebook Server 因為閒置被關閉可以看到以下類似的 log。。
+```log
+jupyterhub_1   | [W 2020-07-02 16:32:59.966 JupyterHub base:1047] User admin server stopped, with exit code: ExitCode=0, Error='', FinishedAt=2020-07-02T16:32:32.292891995Z
 ```

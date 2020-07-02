@@ -14,6 +14,9 @@ POSTGRES_PORT = os.getenv('POSTGRES_PORT', 5432)
 
 JUPYTERHUB_AUTH_METHOD = os.getenv('JUPYTERHUB_AUTH_METHOD', 'Default')
 
+JUPYTER_SERVER_TIMEOUT = os.getenv('SHUTDOWN_NO_ACTIVITY_TIMEOUT', '180')
+NOTEBOOK_TIMEOUT = os.getenv('CULL_IDLE_TIMEOUT', '60')
+
 c.JupyterHub.db_url = 'postgresql://{user}:{password}@{host}:{port}/jupyterhub'.format(
     user=POSTGRES_USER,
     password=POSTGRES_PASSWORD,
@@ -140,6 +143,12 @@ c.Spawner.cpu_limit = 2
 c.Spawner.mem_limit = '2G'
 
 c.Spawner.http_timeout = 180
+
+# 節省資源，自動關閉閒置的 notebook 與 container
+c.Spawner.args = [
+    '--MappingKernelManager.cull_idle_timeout=' + NOTEBOOK_TIMEOUT,
+    '--NotebookApp.shutdown_no_activity_timeout=' + JUPYTER_SERVER_TIMEOUT 
+]
 
 
 import subprocess
