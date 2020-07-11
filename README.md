@@ -17,7 +17,7 @@ VisCode
 ## Clone code
 Clone時需要注意目的地資料夾的位置，以`viscode`最佳，其餘者需要自行注意docker網路配置，主因是Jupyterhub及其DockerSpwner是透過docker的網路互動
 ```bash
-git clone https://github.com/BlackTeaToast/VisCode.git viscode
+git clone https://github.com/ncu-csie-kslab/VisCode.git viscode
 
 ```
 
